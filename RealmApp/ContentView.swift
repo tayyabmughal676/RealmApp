@@ -6,11 +6,23 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct ContentView: View {
+    
+    
+    @ObservedResults(Group.self) var groups
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        if let group = groups.first {
+            ItemListView(group: group)
+        }else{
+            ProgressView()
+                .onAppear{
+                    $groups.append(Group())
+                }
+        }
+        
     }
 }
 
